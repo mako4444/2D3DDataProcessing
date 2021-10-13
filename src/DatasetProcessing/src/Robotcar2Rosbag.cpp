@@ -63,7 +63,7 @@ std::vector<string> LoadUnixTimestamps(const std::string& filename, std::string&
     {
         string unix_time = line.substr(0, line.find(delimiter)); 
         string strSec = unix_time.substr(0, 10);
-        if (atoi(strSec.c_str()) > startTimeSec && atoi(strSec.c_str()) < endTimeSec)
+        if (atoi(strSec.c_str()) >= startTimeSec && atoi(strSec.c_str()) <= endTimeSec)
         {
             unix_timestamps.push_back(unix_time);
         }
