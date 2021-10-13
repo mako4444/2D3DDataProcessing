@@ -9,7 +9,7 @@ void laser_cloud_surround_callback(const sensor_msgs::PointCloud2::ConstPtr& msg
     pcl::fromROSMsg(*msg, cloud);
     ROS_INFO("I heard [%d] Points", cloud.points.size());
     
-    if (cloud.points.size() > 100000)
+    if (cloud.points.size() > 400000)
     {   
         //std::string fielName = "/Data/Robotcar_radar/Scenes/" + std::to_string(msg->header.stamp.sec) + ".pcd";
         std::string fielName = std::to_string(cloud.points.size()) + ".pcd";

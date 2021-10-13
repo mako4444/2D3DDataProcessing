@@ -777,8 +777,8 @@ public:
         downSizeFilterGlobalMapKeyPoses.setInputCloud(globalMapKeyPoses);
         downSizeFilterGlobalMapKeyPoses.filter(*globalMapKeyPosesDS);
 	    // extract visualized and downsampled key frames
-        for (int i = 0; i < globalMapKeyPosesDS->points.size(); ++i){
-			int thisKeyInd = (int)globalMapKeyPosesDS->points[i].intensity;
+        for (int i = 0; i < globalMapKeyPoses->points.size(); ++i){
+			int thisKeyInd = (int)globalMapKeyPoses->points[i].intensity;
 			*globalMapKeyFrames += *transformPointCloud(cornerCloudKeyFrames[thisKeyInd],   &cloudKeyPoses6D->points[thisKeyInd]);
 			*globalMapKeyFrames += *transformPointCloud(surfCloudKeyFrames[thisKeyInd],    &cloudKeyPoses6D->points[thisKeyInd]);
 			*globalMapKeyFrames += *transformPointCloud(outlierCloudKeyFrames[thisKeyInd], &cloudKeyPoses6D->points[thisKeyInd]);
@@ -787,8 +787,22 @@ public:
         downSizeFilterGlobalMapKeyFrames.setInputCloud(globalMapKeyFrames);
         downSizeFilterGlobalMapKeyFrames.filter(*globalMapKeyFramesDS);
  
+        /*
+        float x, y, z;
+        int pointCount = globalMapKeyFramesDS->points.size();
+        for (int i = 0; i < pointCount; ++i)
+        {
+            x = globalMapKeyFramesDS->points[i].x;
+            y = globalMapKeyFramesDS->points[i].y;
+            z = globalMapKeyFramesDS->points[i].z;
+            globalMapKeyFramesDS->points[i].x = y;
+            globalMapKeyFramesDS->points[i].y = z;
+            globalMapKeyFramesDS->points[i].z = x;
+        }
+        */
+
         sensor_msgs::PointCloud2 cloudMsgTemp;
-        pcl::toROSMsg(*globalMapKeyFramesDS, cloudMsgTemp);
+        pcl::toROSMsg(*globalMapKeyFrames, cloudMsgTemp);
         cloudMsgTemp.header.stamp = ros::Time().fromSec(timeLaserOdometry);
         cloudMsgTemp.header.frame_id = "camera_init";
         pubLaserCloudSurround.publish(cloudMsgTemp);  

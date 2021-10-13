@@ -237,3 +237,6 @@ link_directories(
 
 add_executable(lazer_cloud_surround2pcd src/lazer_cloud_surround2pcd.cpp)
 target_link_libraries(lazer_cloud_surround2pcd ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES})
+
+add_executable(generate_pose src/generate_pose.cpp)
+target_link_libraries(generate_pose ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES})
